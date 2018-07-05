@@ -14,15 +14,21 @@ try {
 
 
 foreach ( $results as $dir ) {
-    $file1 = $dir."/name";
-    $name = file($file1, FILE_IGNORE_NEW_LINES);
-    $file2 = $dir."/w1_slave";
-    $data2 = file($file2, FILE_IGNORE_NEW_LINES);
-    if ( preg_match('/YES$/', $data2[0] ) ) {
-        if ( preg_match('/t=(\d+)$/', $data2[1], $matches, PREG_OFFSET_CAPTURE ) ) {
+    $probeArray = array();
+    $probenamefile = $dir."/name";
+    $probe = file($probenamefile, FILE_IGNORE_NEW_LINES);
+    $probedatafile = $dir."/w1_slave";
+    $probedata = file($probedatafile, FILE_IGNORE_NEW_LINES);
+    if ( preg_match('/YES$/', $probedata[0] ) ) {
+        if ( preg_match('/t=(\d+)$/', $probedata[1], $matches, PREG_OFFSET_CAPTURE ) ) {
             $temp = $matches[1][0] / 1000;
         }
     }
+    $probeArray['when'] = now();
+    $probeArray['reading'] = $temp;
+    $probeArray['source'] = $probe;
+    $probeArray['Logger'] = $logger;
+    $result = $clsThermaClass->updateDB($probeArray);
 //     echo "This name : ".$name[0]." har this reading : ".$temp." !\n";
 }
 
