@@ -2,6 +2,7 @@
 $base_dir = '/sys/bus/w1/devices/';
 $device_folder = glob($base_dir . '28*')[0];
 
+print_r($device_folder);
 foreach ( $device_folder as $where ) {
     $device_file = $where . '/w1_slave';
     $data = file($device_file, FILE_IGNORE_NEW_LINES);
@@ -21,7 +22,7 @@ foreach ( $device_folder as $where ) {
     
 }
 
-
+?>
 
 
 
