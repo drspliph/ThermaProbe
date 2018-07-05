@@ -36,6 +36,7 @@ class ThermaClass {
         $stmt = $dbh->prepare($sql);
         $result = $stmt->execute($params);
         return $result;
+        // What the fuck ?? 
     }
     
 }
