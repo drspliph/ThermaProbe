@@ -6,6 +6,7 @@ $results = glob("{/sys/bus/w1/devices/28*}",GLOB_BRACE);
 print_r($results);
 foreach ( $results as $dir ) {
     $file1 = $dir."/name";
+    echo "Raw file1 is :".$file1." !!";
     $data1 = file($file1, FILE_IGNORE_NEW_LINES);
     echo "File is : ".$data1[0]."\n";
 
