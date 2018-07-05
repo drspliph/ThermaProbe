@@ -21,7 +21,3 @@ foreach ( glob($base_dir . '28*')[0] as $folder ) {
 }
 
 ?>
-
-
-
-
