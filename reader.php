@@ -13,7 +13,7 @@ foreach ( $results as $dir ) {
             $temp = $matches[1][0] / 1000;
         }
     }
-    echo "This name : ".name[0]." har this reading : ".$temp." !\n";
+    echo "This name : ".$name[0]." har this reading : ".$temp." !\n";
 //     $data = file(, FILE_IGNORE_NEW_LINES);
 }
 
