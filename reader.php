@@ -20,5 +20,5 @@ foreach ( $results as $dir ) {
 }
 
 // This is a good example of male caommitment issues
-
+// All issues resolved
 ?>
