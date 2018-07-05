@@ -13,7 +13,7 @@ class ThermaClass {
         $params[] = $array['when'];
         $params[] = $array['reading'];
         $params[] = $array['source'];
-        
+        $params[] = $array['Logger'];
         
         try {
             $dbh = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=UTF8", $db_user, $db_pass);
@@ -27,9 +27,10 @@ class ThermaClass {
                 when,
                 reading,
                 source,
+                Logger
             )
             values
-            (?,?,?)
+            (?,?,?,?)
                 ;
             ";
         $stmt = $dbh->prepare($sql);
