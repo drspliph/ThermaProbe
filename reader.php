@@ -6,10 +6,7 @@ $results = glob("{/sys/bus/w1/devices/28*}",GLOB_BRACE);
 print_r($results);
 foreach ( $results as $dir ) {
     $file1 = $dir."/name";
-    echo "Raw file1 is :".$file1." !!";
-    $data1 = file($file1, FILE_IGNORE_NEW_LINES);
-    echo "File is : ".$data1[0]."\n";
-
+    $name = file($file1, FILE_IGNORE_NEW_LINES);
     $file2 = $dir."/w1_slave";
     $data2 = file($file2, FILE_IGNORE_NEW_LINES);
     if ( preg_match('/YES$/', $data2[0] ) ) {
@@ -17,8 +14,7 @@ foreach ( $results as $dir ) {
             $temp = $matches[1][0] / 1000;
         }
     }
-    
-    echo "Temp is : ".$temp."\n";
+    echo "This name : ".$name." has this reading : ".$temp."\n";
 //     $data = file(, FILE_IGNORE_NEW_LINES);
 }
 
