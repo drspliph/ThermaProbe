@@ -1,22 +1,35 @@
 <?php
+require_once 'setup.php';
 $base_dir = '/sys/bus/w1/devices/';
 
 $results = glob("{/sys/bus/w1/devices/28*}",GLOB_BRACE);
 
-print_r($results);
+try {
+    $dbh = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=UTF8", $db_user, $db_pass);
+    //     $clsWaterToolz->dbh;
+} catch (PDOException $e) {
+    echo $e->getMessage();
+    die("Dang fluxcapacitor is shot again!");
+}
+
+
 foreach ( $results as $dir ) {
-    $file1 = $dir."/name";
-    echo "File1 is : ".$file1."\n";
-    $name = file($file1, FILE_IGNORE_NEW_LINES);
-    $file2 = $dir."/w1_slave";
-    $data2 = file($file2, FILE_IGNORE_NEW_LINES);
-    if ( preg_match('/YES$/', $data2[0] ) ) {
-        if ( preg_match('/t=(\d+)$/', $data2[1], $matches, PREG_OFFSET_CAPTURE ) ) {
+    $probeArray = array();
+    $probenamefile = $dir."/name";
+    $probe = file($probenamefile, FILE_IGNORE_NEW_LINES);
+    $probedatafile = $dir."/w1_slave";
+    $probedata = file($probedatafile, FILE_IGNORE_NEW_LINES);
+    if ( preg_match('/YES$/', $probedata[0] ) ) {
+        if ( preg_match('/t=(\d+)$/', $probedata[1], $matches, PREG_OFFSET_CAPTURE ) ) {
             $temp = $matches[1][0] / 1000;
         }
     }
-    echo "This name : ".$name[0]." has this reading : ".$temp."\n";
-//     $data = file(, FILE_IGNORE_NEW_LINES);
+    $probeArray['when'] = now();
+    $probeArray['reading'] = $temp;
+    $probeArray['source'] = $probe;
+    $probeArray['Logger'] = $logger;
+    $result = $clsThermaClass->updateDB($probeArray);
+//     echo "This name : ".$name[0]." har this reading : ".$temp." !\n";
 }
 
 // This is a good example of male caommitment issues
