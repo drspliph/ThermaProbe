@@ -10,7 +10,7 @@ foreach ( $results as $dir ) {
     echo "File is : ".$data1[0]."\n";
 
     $file2 = $dir."w1_slave";
-    $data2 = file($file2, FILE_IGNORE_MEM_LINES);
+    $data2 = file($file2, FILE_IGNORE_NEW_LINES);
     if ( preg_match('/YES$/', $data2[0] ) ) {
         if ( preg_match('/t=(\d+)$/', $data2[1], $matches, PREG_OFFSET_CAPTURE ) ) {
             $temp = $matches[1][0] / 1000;
